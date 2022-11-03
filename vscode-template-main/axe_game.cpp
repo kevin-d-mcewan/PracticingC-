@@ -17,6 +17,12 @@ int main(int argc, char const *argv[])
   int circle_y{height/2};
   int circle_radius{width / 3};
 
+  // Axe Coordinates/Dimensions
+  int axe_x{400};
+  int axe_y{400};
+
+  int direction{10};
+
   InitWindow(width, height, "Kevin's Window");
   SetTargetFPS(60);
   while (WindowShouldClose() == false)
@@ -26,17 +32,27 @@ int main(int argc, char const *argv[])
 
     // Game Logic Begins
     DrawCircle(circle_x, circle_y, circle_radius, secondary_Color);
+    DrawRectangle(axe_x, axe_y, 50, 50, primary_Color);
 
-    if (IsKeyDown(KEY_D))
+    // The axe moves up and down and reverses once it hits top or bottom of window.
+    axe_y += direction;
+    if (axe_y > 700 || axe_y < 0)
+    {
+      direction = -direction;
+    }
+    
+    
+
+    if (IsKeyDown(KEY_D) && circle_x < 1000)
     {
       /* Moving the Circle*/
-      circle_x = circle_x + 10;
+      circle_x += direction;
     }
 
-    if (IsKeyDown(KEY_A))
+    if (IsKeyDown(KEY_A) && circle_x > 0)
     {
       /* Moving Circle Left*/
-      circle_x = circle_x - 10;
+      circle_x -= direction;
     }
     
     
