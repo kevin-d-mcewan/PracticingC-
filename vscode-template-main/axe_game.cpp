@@ -32,7 +32,7 @@ int main(int argc, char const *argv[])
   // int u_axe_y{axe_y};
   // int b_axe_y{axe_y + axe_length};
 
-  // bool collision_with_axe{true};
+  bool collision_with_axe{false};
 
   int direction{10};
 
@@ -43,38 +43,44 @@ int main(int argc, char const *argv[])
     BeginDrawing();
     ClearBackground(windowBG_Color);
 
-    
-    
+      if (collision_with_axe)
+      {
+        DrawText("Game Over!", 400, 375, 28, gameBG_Color);
+      }
+      else
+      {
+          // Game Logic Begins
+          DrawCircle(circle_x, circle_y, circle_radius, secondary_Color);
+          DrawRectangle(axe_x, axe_y, axe_length, axe_length, primary_Color);
 
-    // Game Logic Begins
-    DrawCircle(circle_x, circle_y, circle_radius, secondary_Color);
-    DrawRectangle(axe_x, axe_y, axe_length, axe_length, primary_Color);
+          // The axe moves up and down and reverses once it hits top or bottom of window.
+          axe_y += direction;
+          if (axe_y > window_height || axe_y < 0)
+          {
+            direction = -direction;
+          }
+      
+      
 
-    // The axe moves up and down and reverses once it hits top or bottom of window.
-    axe_y += direction;
-    if (axe_y > window_height || axe_y < 0)
-    {
-      direction = -direction;
-    }
-    
-    
+          if (IsKeyDown(KEY_D) && circle_x < window_width)
+          {
+              /* Moving the Circle*/
+              circle_x += 10;
+          }
 
-    if (IsKeyDown(KEY_D) && circle_x < window_width)
-    {
-      /* Moving the Circle*/
-      circle_x += 10;
-    }
-
-    if (IsKeyDown(KEY_A) && circle_x > 0)
-    {
-      /* Moving Circle Left*/
-      circle_x -= 10;
-    }
-    
-    
+          if (IsKeyDown(KEY_A) && circle_x > 0)
+          {
+              /* Moving Circle Left*/
+              circle_x -= 10;
+          }
+      
+      
 
 
-    // Game Logic Ends
+            // Game Logic Ends
+      }
+      
+
     EndDrawing();
   }
 }
